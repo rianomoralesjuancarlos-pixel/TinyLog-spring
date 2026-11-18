@@ -24,7 +24,6 @@ import lombok.experimental.SuperBuilder;
 public class Usuario {
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
-    @Column(name = "id_usuario")
     private Long id;
 
     @Column(name = "nombres", nullable = false, length = 60)
