@@ -1,4 +1,3 @@
-
 package com.sena.tinylog.dtos;
 
 import jakarta.validation.constraints.NotBlank;

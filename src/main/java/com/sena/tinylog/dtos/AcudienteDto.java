@@ -11,9 +11,8 @@ import lombok.experimental.SuperBuilder;
 @AllArgsConstructor
 @NoArgsConstructor
 @SuperBuilder
-public class AcudienteDto {
+public class AcudienteDto extends UsuarioDto{
 
     private Long id;
-    
 
 }

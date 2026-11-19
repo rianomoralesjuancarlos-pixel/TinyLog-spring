@@ -9,7 +9,7 @@ import com.sena.tinylog.models.Usuario;
 @Mapper(componentModel = "spring")
 public interface UsuarioMapper {
 
-    //convertir de entidad a Dto  
+    //convertir de entidad a Dto
     @Mapping (source = "nom" , target = "nomb")
     @Mapping (source = "ape" , target = "apell")
     @Mapping (source = "corr" , target = "corre")
