@@ -21,9 +21,9 @@ import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PutMapping;
 
 
-@RestController 
+@RestController
 @RequestMapping ("api/usuarios")
-@RequiredArgsConstructor 
+@RequiredArgsConstructor
 
 public class UsuarioController {
 
