@@ -9,7 +9,7 @@ public interface UsuarioServices {
     UsuarioDto guardar(UsuarioDto usuarioDto);
 
     //listar todos los usuario
-    List<UsuarioDto> ListarTodos();
+    List<UsuarioDto> listarTodos();
 
     //Consultar usuario por id
     UsuarioDto buscarPorId(Long id);
@@ -17,5 +17,5 @@ public interface UsuarioServices {
     //Actualizar usuario
     UsuarioDto actualizar(Long id, UsuarioDto usuarioDto);
     //Eliminar usuario
-    UsuarioDto eliminar(Long id);
+    void eliminar(Long id);
 }

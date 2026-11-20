@@ -27,60 +27,69 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 public class UsuarioController {
 
+
     private final UsuarioServices usuarioServices;
 
-    //1 Registrar nuevo usuario
+    // 1 Registrar nuevo usuario
     @PostMapping
-    public ResponseEntity <UsuarioDto> guardar(@Valid @RequestBody UsuarioDto usuarioDto) {
-        
+    public ResponseEntity<UsuarioDto> guardar(@Valid @RequestBody UsuarioDto usuarioDto) {
+
         UsuarioDto usuarioguardado = usuarioServices.guardar(usuarioDto);
         return ResponseEntity
-        .status(HttpStatus.CREATED)
-        .body(usuarioguardado)
-        ;
+                .status(HttpStatus.CREATED)
+                .body(usuarioguardado);
     }
 
-    //Lista de usuario
+    // Listar Usuarios
     @GetMapping
-    public ResponseEntity <List<UsuarioDto>> ListarTodos() {
-        return ResponseEntity.ok(usuarioServices.ListarTodos());
+    public ResponseEntity<List<UsuarioDto>> listarTodos() {
+        return ResponseEntity.ok(usuarioServices.listarTodos());
     }
 
-    //COnsultar por id
+    // Consulta usuario por Id
     @GetMapping("/{id}")
-    public ResponseEntity <UsuarioDto> consultarid(@PathVariable Long id) {
+    public ResponseEntity<UsuarioDto> consutaId(@PathVariable Long id) {
         return ResponseEntity.ok(usuarioServices.buscarPorId(id));
     }
-    //Consultar por post
+
+    // consulta por post
     @PostMapping("/buscar")
-    public ResponseEntity<UsuarioDto> consultaIdPost(@RequestBody UsuarioDto Dto) {
-        UsuarioDto encontrado = usuarioServices.buscarPorId(Dto.getId());
+    public ResponseEntity<UsuarioDto> consutaIdpost(@RequestBody UsuarioDto dto) {
+        UsuarioDto encontrado = usuarioServices.buscarPorId(dto.getId());
+
         return ResponseEntity.ok(encontrado);
     }
 
-    //Actualizar usuario
+    // actualizar
     @PutMapping("/{id}")
-    public ResponseEntity<UsuarioDto> actualizar(@PathVariable Long id, @RequestBody UsuarioDto usuarioDto) {
-        UsuarioDto usuarioActualizado = usuarioServices.actualizar(id, usuarioDto);
-        return ResponseEntity.ok(usuarioActualizado);
-    }
-    //Actualizar usuario por post
-    @PostMapping("/actualizar")
-    public ResponseEntity <UsuarioDto> actualizarPost(@RequestBody UsuarioDto usuarioDto) {
-        UsuarioDto usuarioActualizado = usuarioServices.actualizar(usuarioDto.getId(), usuarioDto);
-        return ResponseEntity.ok(usuarioActualizado);
-    }
-    //eliminar usuario por id
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<UsuarioDto> eliminar(@PathVariable Long id) {
-        UsuarioDto usuarioEliminado = usuarioServices.eliminar(id);
-        return ResponseEntity.ok(usuarioEliminado);
-    }
-    //eliminar usuario por delete
-    @DeleteMapping("/eliminar")
-    public ResponseEntity<UsuarioDto> eliminarPorDelete(@RequestBody UsuarioDto usuarioDto) {
-        UsuarioDto usuarioEliminado = usuarioServices.eliminar(usuarioDto.getId());
-        return ResponseEntity.ok(usuarioEliminado); 
+    public ResponseEntity<UsuarioDto> update(
+            @PathVariable Long id,
+            @RequestBody UsuarioDto dto) {
 
+        UsuarioDto usuarioActualizado = usuarioServices.actualizar(
+                id, dto);
+
+        return ResponseEntity.ok(usuarioActualizado);
     }
+
+    // actualizar ocultando ID
+    @PutMapping("/actualizar")
+    public ResponseEntity<UsuarioDto> update2(
+            @RequestBody UsuarioDto dto) {
+        Long id = dto.getId();
+        UsuarioDto usuarioActualizado = usuarioServices.actualizar(
+                id, dto);
+
+        return ResponseEntity.ok(usuarioActualizado);
+    }
+
+    // Eliminar Usuario
+    @DeleteMapping("/{id}")
+    public ResponseEntity<String> eliminar(@PathVariable Long id) {
+
+        usuarioServices.eliminar(id);
+
+        return ResponseEntity.ok("Usuario con id :" + id + " Eliminado correctamente");
+    }
+
 }
