@@ -1,7 +1,8 @@
 package com.sena.tinylog.mappers;
 
 import com.sena.tinylog.dtos.AcudienteDto;
-import com.sena.tinylog.models.Acudiente;
+import com.sena.tinylog.models.usuarios.Acudiente;
+
 
 public interface AcudienteMapper {
 

@@ -42,13 +42,13 @@ public class AcudienteController {
         return ResponseEntity.ok(acudienteServices.ListarTodos());
     }
 
-    //Consultar por id
+    //Consultar acudiente por id por url
     @GetMapping("/{id}")
     public ResponseEntity <AcudienteDto> consultarId(@PathVariable Long id) {
         return ResponseEntity.ok(acudienteServices.buscarPorId(id));
     }
 
-    //Consultar por post
+    //Consultar acudiente por id oculto
     @PostMapping("/buscar")
     public ResponseEntity<AcudienteDto> consultarIdPost(@RequestBody AcudienteDto Dto) {
         AcudienteDto encontrado = acudienteServices.buscarPorId(Dto.getId());
@@ -62,22 +62,8 @@ public class AcudienteController {
         return ResponseEntity.ok(acudienteActualizado);
     }
 
-    //Actualizar acudiente por post
-    @PostMapping("/actualizar")
-    public ResponseEntity <AcudienteDto> actualizarPost(@RequestBody AcudienteDto acudienteDto) {
-        AcudienteDto acudienteActualizado = acudienteServices.actualizar(acudienteDto.getId(), acudienteDto);
-        return ResponseEntity.ok(acudienteActualizado);
-    }
-
-    //Eliminar acudiente por id
-    @DeleteMapping("/eliminar/{id}")
-    public ResponseEntity<AcudienteDto> eliminar(@PathVariable Long id) {
-        AcudienteDto acudienteEliminado = acudienteServices.eliminar(id);
-        return ResponseEntity.ok(acudienteEliminado);
-    }
-
-    //Eliminar acudiente por delete
-    @DeleteMapping("/eliminar")
+    //Eliminar acudiente
+    @DeleteMapping("/{id}")
     public ResponseEntity<AcudienteDto> eliminarPorDetele(@RequestBody AcudienteDto acudienteDto) {
         AcudienteDto acudienteEliminado = acudienteServices.eliminar(acudienteDto.getId());
         return ResponseEntity.ok(acudienteEliminado);

@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.sena.tinylog.dtos.AcudienteDto;
 import com.sena.tinylog.mappers.AcudienteMapper;
-import com.sena.tinylog.models.Acudiente;
+import com.sena.tinylog.models.usuarios.Acudiente;
 import com.sena.tinylog.repositoryes.AcudienteRepository;
 import com.sena.tinylog.services.AcudienteServices;
 import jakarta.persistence.EntityNotFoundException;
@@ -59,7 +59,6 @@ public class AcudienteServicesImplement implements AcudienteServices{
                 //Actualizar datos
                 acudienteEncontrado.setNom(acudienteDto.getNomb());
                 acudienteEncontrado.setApe(acudienteDto.getApell());
-                acudienteEncontrado.setCorr(acudienteDto.getCorre());
                 acudienteEncontrado.setTel(acudienteDto.getTele());
 
 
