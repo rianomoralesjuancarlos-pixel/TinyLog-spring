@@ -1,7 +1,7 @@
 package com.sena.tinylog.dtos;
 
-
 import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -14,6 +14,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class DocenteDto extends UsuarioDto {
 
-    private String cargo ="profesor";
+    @Builder.Default
+    private String cargo = "profesor";
+
     private Double sueldo;
 }
