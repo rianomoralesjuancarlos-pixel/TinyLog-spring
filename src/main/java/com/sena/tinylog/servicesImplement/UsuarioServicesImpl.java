@@ -4,6 +4,7 @@ import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.sena.tinylog.dtos.UsuarioDto;
 import com.sena.tinylog.mappers.UsuarioMapper;
@@ -15,8 +16,9 @@ import com.sena.tinylog.repositoryes.UsuarioAuthRepository;
 import com.sena.tinylog.repositoryes.UsuarioRepository;
 import com.sena.tinylog.services.UsuarioServices;
 
+
 import jakarta.persistence.EntityNotFoundException;
-import jakarta.transaction.Transactional;
+
 import lombok.RequiredArgsConstructor;
 
 @Service
@@ -77,7 +79,7 @@ public class UsuarioServicesImpl implements UsuarioServices {
         }
 
         // 4. Convertir DTO a entidad Usuario
-        Usuario usuario = usuarioMapper.convierteaEntidad(usuarioDto);
+        Usuario usuario = usuarioMapper.convierteEntidad(usuarioDto);
 
         usuario.setId(null);
         usuario.setTipoDoc(tipoDocumento);
@@ -106,7 +108,7 @@ public class UsuarioServicesImpl implements UsuarioServices {
         usuarioAuthRepository.save(usuarioAuth);
 
         // 8. Retornar información del usuario
-        return usuarioMapper.convierteaDto(usuarioGuardado);
+        return usuarioMapper.convierteDto(usuarioGuardado);
 
     }
 
@@ -120,7 +122,7 @@ public class UsuarioServicesImpl implements UsuarioServices {
     public List<UsuarioDto> listarTodos() {
         return usuarioRepository.findAll()
                 .stream()
-                .map(usuarioMapper::convierteaDto)
+                .map(usuarioMapper::convierteDto)
                 .toList();
     }
 
@@ -130,7 +132,7 @@ public class UsuarioServicesImpl implements UsuarioServices {
     public UsuarioDto buscarPorId(Long id) {
         Usuario usuario = usuarioRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado" + id));
-        return usuarioMapper.convierteaDto(usuario);
+        return usuarioMapper.convierteDto(usuario);
     }
 
     // Actualizar usuario
@@ -149,7 +151,7 @@ public class UsuarioServicesImpl implements UsuarioServices {
 
         Usuario usuarioActualizado = usuarioRepository.save(usuarioEncotrado);
 
-        return usuarioMapper.convierteaDto(usuarioActualizado);
+        return usuarioMapper.convierteDto(usuarioActualizado);
     }
 
     @Override

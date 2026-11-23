@@ -1,4 +1,3 @@
-
 package com.sena.tinylog.dtos;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
@@ -20,6 +19,8 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor
 @SuperBuilder
 public class UsuarioDto {
+
+    private Long id;
      // nomb no puede ser nulo ni vacío, debe tener entre 2 y 60 caracteres
     @NotBlank(message = "El nombre es obligatorio")
     @Size(min = 2, max = 60, message = "El nombre debe tener entre 2 y 60 caracteres")
