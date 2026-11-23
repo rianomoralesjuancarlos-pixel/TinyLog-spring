@@ -14,6 +14,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class DocenteDto extends UsuarioDto {
 
-    private String cargo;
+    private String cargo ="profesor";
     private Double sueldo;
 }

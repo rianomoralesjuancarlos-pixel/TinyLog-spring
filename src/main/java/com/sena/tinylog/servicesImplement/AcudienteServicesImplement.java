@@ -4,7 +4,7 @@ import java.util.List;
 import org.springframework.stereotype.Service;
 import com.sena.tinylog.dtos.AcudienteDto;
 import com.sena.tinylog.mappers.AcudienteMapper;
-import com.sena.tinylog.models.Acudiente;
+import com.sena.tinylog.models.usuarios.Acudiente;
 import com.sena.tinylog.repositoryes.AcudienteRepository;
 import com.sena.tinylog.services.AcudienteServices;
 import jakarta.persistence.EntityNotFoundException;

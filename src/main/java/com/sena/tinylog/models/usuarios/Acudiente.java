@@ -1,4 +1,4 @@
-package com.sena.tinylog.models;
+package com.sena.tinylog.models.usuarios;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
@@ -14,16 +14,18 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Getter @Setter
-@Entity 
-@Table(name = "usuarios")
+@Getter@Setter
+@Entity
+@Table(name = "acudientes")
 @Inheritance(strategy = InheritanceType.JOINED)
-@AllArgsConstructor 
-@NoArgsConstructor 
-@SuperBuilder 
-public class Usuario {
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
+public class Acudiente extends Usuario {
+
     @Id
     @GeneratedValue (strategy = GenerationType.IDENTITY)
+    @Column(name = "id_acudiente")
     private Long id;
 
     @Column(name = "nombres", nullable = false, length = 60)
@@ -37,7 +39,5 @@ public class Usuario {
 
     @Column(name = "telefono", length = 20)
     private String tel;
-
-
 
 }
