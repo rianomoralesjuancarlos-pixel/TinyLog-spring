@@ -4,7 +4,6 @@ import com.sena.tinylog.dtos.AcudienteDto;
 
 import com.sena.tinylog.models.usuarios.Acudiente;
 import com.sena.tinylog.dtos.AcudienteDtoResponse;
-import com.sena.tinylog.models.usuarios.Acudiente;
 
 
 public interface AcudienteMapper {
