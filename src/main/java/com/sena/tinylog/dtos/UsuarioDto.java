@@ -20,6 +20,7 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class UsuarioDto {
 
+    private Long id;
     
      // nomb no puede ser nulo ni vacío, debe tener entre 2 y 60 caracteres
     @NotBlank(message = "El nombre es obligatorio")

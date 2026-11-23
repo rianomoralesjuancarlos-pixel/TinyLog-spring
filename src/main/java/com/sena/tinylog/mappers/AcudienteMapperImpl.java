@@ -54,11 +54,10 @@ public class AcudienteMapperImpl implements AcudienteMapper{
                 // numero de documento y tipo de document
                 .numDoc(acudienteDto.getNumDoc())
                 // atributos de AcudienteDto
-                .tipoPariente(null) // Se establece como null, ya que se asignará posteriormente en el servicio
+                .tipoAcudiente(null) // Se establece como null, ya que se asignará posteriormente en el servicio
 
-                // No es necesario mapear tipo de cliente porque
-                // tiene relacion con la entidad TiposCliente
-                .puntos(0) // Inicializa los puntos en 0 al crear un nuevo cliente
+                // No es necesario mapear tipo de acudiente porque
+                // tiene relacion con la entidad TiposAcudiente
                 .build();
     }
 

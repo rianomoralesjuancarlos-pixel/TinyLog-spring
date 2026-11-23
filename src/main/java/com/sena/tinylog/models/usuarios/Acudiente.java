@@ -1,6 +1,5 @@
 package com.sena.tinylog.models.usuarios;
 
-import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
 import jakarta.persistence.JoinColumn;
@@ -22,7 +21,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class Acudiente extends Usuario {
 
-    @Column
     @ManyToOne(fetch = FetchType.LAZY)
     @JoinColumn (name = "tipo_Acudiente", nullable = false)
     private TiposAcudiente tipoAcudiente;
