@@ -25,4 +25,5 @@ public class Acudiente extends Usuario {
     @JoinColumn (name = "tipo_Acudiente", nullable = false)
     private TiposAcudiente tipoAcudiente;
 
+    
 }
