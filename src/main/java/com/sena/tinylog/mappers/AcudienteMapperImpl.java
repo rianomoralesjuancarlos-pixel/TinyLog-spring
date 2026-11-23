@@ -31,7 +31,7 @@ public class AcudienteMapperImpl implements AcudienteMapper{
                 .numDoc(acudiente.getNumDoc())
 
                 // atributos de AcudienteDto
-                .tipAcu(acudiente.getTipoAcudiente().get)
+                .tipAcu(acudiente.getTipoAcudiente().getNom_TipoAcu())
                 .build();
     }
 

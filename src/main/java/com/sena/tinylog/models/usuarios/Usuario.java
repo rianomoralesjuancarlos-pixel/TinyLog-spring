@@ -25,13 +25,10 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor 
 @SuperBuilder 
 public class Usuario {
-<<<<<<< HEAD:src/main/java/com/sena/tinylog/models/usuarios/Usuario.java
-@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
-=======
+
     @Id
-    @GeneratedValue (strategy = GenerationType.IDENTITY)
->>>>>>> origin/main:src/main/java/com/sena/tinylog/models/Usuario.java
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
