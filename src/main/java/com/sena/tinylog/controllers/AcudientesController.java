@@ -21,7 +21,7 @@ import org.springframework.web.bind.annotation.PutMapping;
 
 @RestController 
 @RequestMapping ("api/acudientes")
-@RequiredArgsConstructor 
+@RequiredArgsConstructor
 public class AcudientesController {
 
     private final AcudienteServices acuser;
