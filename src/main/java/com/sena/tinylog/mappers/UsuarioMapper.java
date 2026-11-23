@@ -8,7 +8,7 @@ import com.sena.tinylog.models.usuarios.Usuario;
 
 @Mapper(componentModel = "spring")
 public interface UsuarioMapper {
-    
+
     @Mapping(source = "nom", target = "nomb")
     @Mapping(source = "ape", target = "apell")
     @Mapping(source = "dir", target = "direc")
@@ -25,4 +25,5 @@ public interface UsuarioMapper {
     @Mapping(target = "tipoDoc", ignore = true)
     @Mapping(source = "numDoc", target = "numDoc")
     Usuario convierteEntidad(UsuarioDto usuarioDto);
+
 }
