@@ -6,7 +6,7 @@ import org.springframework.stereotype.Service;
 
 import com.sena.tinylog.dtos.DocenteDto;
 import com.sena.tinylog.mappers.DocenteMapper;
-import com.sena.tinylog.models.Docente;
+import com.sena.tinylog.models.usuarios.Docente;
 import com.sena.tinylog.repositoryes.DocenteRepository;
 import com.sena.tinylog.services.DocenteServices;
 

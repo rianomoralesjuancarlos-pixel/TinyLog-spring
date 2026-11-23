@@ -1,4 +1,4 @@
-package com.sena.tinylog.models;
+package com.sena.tinylog.models.usuarios;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
