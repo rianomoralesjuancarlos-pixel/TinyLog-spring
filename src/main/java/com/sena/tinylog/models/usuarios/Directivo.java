@@ -19,8 +19,10 @@ import lombok.Setter;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Directivo extends Usuario {
-    @Column(nullable = false)
-    private String cargo;
+    
+    @Column(nullable = false, length = 50)
+    private String cargo = "Rector";
+  
 }
 
 

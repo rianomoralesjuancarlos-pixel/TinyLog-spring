@@ -1,5 +1,7 @@
 package com.sena.tinylog.models.usuarios;
 
+import com.sena.tinylog.models.Ciudad;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -49,5 +51,9 @@ public class Usuario {
 
     @Column(name = "telefono", length = 20)
     private String tel;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ciudad_codigo", nullable = false)
+    private Ciudad ciudad;
 
 }

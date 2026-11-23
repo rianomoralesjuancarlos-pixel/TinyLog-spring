@@ -22,7 +22,7 @@ public class DocenteServicesImplement implements DocenteServices {
 
     @Override 
     public DocenteDto guardar(DocenteDto docenteDto) {
-        Docente docente = docenteMapper.convierteaEntidad(docenteDto);
+        Docente docente = docenteMapper.convierteEntidad(docenteDto);
         // CORREGIDO: docenteRepository en minúscula
         Docente docenteGuardado = docenteRepository.save(docente);
         return docenteMapper.convierteDto(docenteGuardado);
