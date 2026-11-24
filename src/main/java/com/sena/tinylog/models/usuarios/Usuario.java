@@ -56,4 +56,9 @@ public class Usuario {
     @JoinColumn(name = "ciudad_codigo", nullable = false)
     private Ciudad ciudad;
 
-}
+@Column(name = "correo", unique = true, length = 80)
+private String user;
+
+@Column(name = "password", length = 255)
+private String password;
+}   

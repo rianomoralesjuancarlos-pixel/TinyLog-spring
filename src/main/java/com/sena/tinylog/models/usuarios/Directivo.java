@@ -2,27 +2,24 @@ package com.sena.tinylog.models.usuarios;
 
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
-import jakarta.persistence.Inheritance;
-import jakarta.persistence.InheritanceType;
+import jakarta.persistence.PrimaryKeyJoinColumn;
 import jakarta.persistence.Table;
 import lombok.AllArgsConstructor;
-
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import lombok.experimental.SuperBuilder;
 
-
-@Getter @Setter 
+@Getter
+@Setter
+@AllArgsConstructor
+@NoArgsConstructor
+@SuperBuilder
 @Entity
 @Table(name = "directivo")
-@Inheritance (strategy = InheritanceType.JOINED)
-@NoArgsConstructor
-@AllArgsConstructor
+@PrimaryKeyJoinColumn(name = "id_directivo") // ajusta al nombre real de la FK en tu tabla directivo
 public class Directivo extends Usuario {
-    
+
     @Column(nullable = false, length = 50)
     private String cargo = "Rector";
-  
 }
-
-

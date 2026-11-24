@@ -76,7 +76,7 @@ public class AcudienteServicesImpl implements AcudienteServices {
                 // Validar que el nombre de usuario no exista en la base de datos antes de crear
                 // la cuenta de autenticación. Esto evita duplicados y asegura que cada acudiente
                 // tenga un nombre de usuario único para iniciar sesión.
-                if (usuarioAuthRepository.exisexistsByUser(acudienteDto.getUser())) {
+                if (usuarioAuthRepository.existsByUser(acudienteDto.getUser())) {
                         throw new IllegalArgumentException(
                                         "El nombre de usuario ya está registrado");
                 }

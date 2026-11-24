@@ -3,19 +3,22 @@ package com.sena.tinylog.services;
 import java.util.List;
 
 import com.sena.tinylog.dtos.UsuarioDto;
+import com.sena.tinylog.dtos.UsuarioDtoResponse;
 
 public interface UsuarioServices {
  //registrar un nuevo usuario
-    UsuarioDto guardar(UsuarioDto usuarioDto);
+    UsuarioDtoResponse guardar(UsuarioDto usuarioDto);
 
     //listar todos los usuario
-    List<UsuarioDto> listarTodos();
+    List<UsuarioDtoResponse> listarTodos();
 
     //Consultar usuario por id
-    UsuarioDto buscarPorId(Long id);
+    UsuarioDtoResponse buscarPorId(Long id);
+
+    UsuarioDtoResponse buscarPorNumDoc(String numDoc);
 
     //Actualizar usuario
-    UsuarioDto actualizar(Long id, UsuarioDto usuarioDto);
+    UsuarioDtoResponse actualizar(Long id, UsuarioDto usuarioDto);
     //Eliminar usuario
     void eliminar(Long id);
 }
