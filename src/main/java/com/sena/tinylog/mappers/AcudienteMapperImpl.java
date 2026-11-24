@@ -1,11 +1,9 @@
 package com.sena.tinylog.mappers;
 
 import org.springframework.stereotype.Component;
-
 import com.sena.tinylog.dtos.AcudienteDto;
 import com.sena.tinylog.dtos.AcudienteDtoResponse;
 import com.sena.tinylog.models.usuarios.Acudiente;
-
 
 @Component
 public class AcudienteMapperImpl implements AcudienteMapper{
@@ -27,7 +25,6 @@ public class AcudienteMapperImpl implements AcudienteMapper{
                 .direc(acudiente.getDir())
                 .tele(acudiente.getTel())
                 .tipoDoc(acudiente.getTipoDoc().getId())
-                .nomTipoDoc(acudiente.getTipoDoc().getNombre())
                 .numDoc(acudiente.getNumDoc())
 
                 // atributos de AcudienteDto
@@ -54,6 +51,9 @@ public class AcudienteMapperImpl implements AcudienteMapper{
                 // numero de documento y tipo de document
                 .numDoc(acudienteDto.getNumDoc())
                 // atributos de AcudienteDto// Se establece como null, ya que se asignará posteriormente en el servicio
+                // atributos de ClienteDto
+                .tipoAcudiente(null) // Se establece como null, ya que se asignará posteriormente en el servicio
+                .tipoDoc(null) // Se establece como null, ya que se asignará posteriormente en el servicio
 
                 // No es necesario mapear tipo de acudiente porque
                 // tiene relacion con la entidad TiposAcudiente
