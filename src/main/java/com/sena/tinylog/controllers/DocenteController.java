@@ -19,45 +19,39 @@ import com.sena.tinylog.services.DocenteServices;
 import jakarta.validation.Valid;
 import lombok.RequiredArgsConstructor;
 
-@RestController 
+@RestController
 @RequestMapping("/api/docentes")
-@RequiredArgsConstructor 
+@RequiredArgsConstructor
 public class DocenteController {
 
     private final DocenteServices docenteServices;
 
-    // 1. Registrar nuevo docente
     @PostMapping
-    public ResponseEntity<DocenteDto> guardar(@Valid @RequestBody DocenteDto docenteDto) {
-        DocenteDto docenteGuardado = docenteServices.guardar(docenteDto);
-        return ResponseEntity
-                .status(HttpStatus.CREATED)
-                .body(docenteGuardado);
+    public ResponseEntity<DocenteDto> guardar(@Valid @RequestBody DocenteDto dto) {
+        DocenteDto creado = docenteServices.guardar(dto);
+        return ResponseEntity.status(HttpStatus.CREATED).body(creado);
     }
 
-    // 2. Listar todos los docentes
     @GetMapping
-    public ResponseEntity<List<DocenteDto>> listarTodos() {
-        return ResponseEntity.ok(docenteServices.listarTodos());
+    public ResponseEntity<List<DocenteDto>> listarDoc() {
+        return ResponseEntity.ok(docenteServices.listarDoc());
     }
 
-    // 3. Consultar docente por ID (GET)
     @GetMapping("/{id}")
-    public ResponseEntity<DocenteDto> consultarPorId(@PathVariable Long id) {
+    public ResponseEntity<DocenteDto> buscarPorId(@PathVariable Long id) {
         return ResponseEntity.ok(docenteServices.buscarPorId(id));
     }
 
-    // 4. Actualizar docente (PUT)
     @PutMapping("/{id}")
-    public ResponseEntity<DocenteDto> actualizar(@PathVariable Long id, @Valid @RequestBody DocenteDto docenteDto) {
-        DocenteDto docenteActualizado = docenteServices.actualizar(id, docenteDto);
-        return ResponseEntity.ok(docenteActualizado);
+    public ResponseEntity<DocenteDto> actualizar(
+            @PathVariable Long id,
+            @RequestBody DocenteDto dto) {
+        return ResponseEntity.ok(docenteServices.actualizar(id, dto));
     }
 
-    // 5. Eliminar docente por ID (DELETE)
     @DeleteMapping("/{id}")
-    public ResponseEntity<DocenteDto> eliminar(@PathVariable Long id) {
-        DocenteDto docenteEliminado = docenteServices.eliminar(id);
-        return ResponseEntity.ok(docenteEliminado);
+    public ResponseEntity<Void> eliminar(@PathVariable Long id) {
+        docenteServices.eliminar(id);
+        return ResponseEntity.noContent().build();
     }
-}      
+}

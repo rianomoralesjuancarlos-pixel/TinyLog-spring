@@ -10,15 +10,15 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-@Getter @Setter
-@AllArgsConstructor 
-@NoArgsConstructor 
-@SuperBuilder 
-@Entity 
+@Getter
+@Setter
+@NoArgsConstructor
+@AllArgsConstructor
+@SuperBuilder
+@Entity
 @Table(name = "docentes")
-@PrimaryKeyJoinColumn(name = "id_docente") 
+@PrimaryKeyJoinColumn(name = "id_docente")
 public class Docente extends Usuario {
-
 
     @Column(name = "salario")
     private Double salario;
