@@ -7,10 +7,13 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.sena.tinylog.dtos.UsuarioDto;
+import com.sena.tinylog.dtos.UsuarioDtoResponse;
 import com.sena.tinylog.mappers.UsuarioMapper;
+import com.sena.tinylog.models.Ciudad;
 import com.sena.tinylog.models.auth.UsuarioAuth;
 import com.sena.tinylog.models.usuarios.TipoDocumento;
 import com.sena.tinylog.models.usuarios.Usuario;
+import com.sena.tinylog.repositoryes.CiudadRepository;
 import com.sena.tinylog.repositoryes.TipoDocumentoRepository;
 import com.sena.tinylog.repositoryes.UsuarioAuthRepository;
 import com.sena.tinylog.repositoryes.UsuarioRepository;
@@ -25,12 +28,14 @@ import lombok.RequiredArgsConstructor;
 @RequiredArgsConstructor
 public class UsuarioServicesImpl implements UsuarioServices {
 
+
     // Inyección de dependencias mediante constructor, gracias a la anotación
     // @RequiredArgsConstructor de Lombok
-    private final UsuarioRepository usuarioRepository;
+    private final UsuarioRepository usuarioRespository;
     private final UsuarioAuthRepository usuarioAuthRepository;
     private final TipoDocumentoRepository tipoDocumentoRepository;
     private final UsuarioMapper usuarioMapper;
+    private final CiudadRepository ciudadRepository;
     /*
      * Inyección de PasswordEncoder para encriptar contraseñas
      * PasswordEncoder es una interfaz de Spring Security que proporciona métodos
@@ -56,10 +61,10 @@ public class UsuarioServicesImpl implements UsuarioServices {
      * import org.springframework.transaction.annotation.Transactional;
      */
     @Transactional
-    public UsuarioDto guardar(UsuarioDto usuarioDto) {
+    public UsuarioDtoResponse guardar(UsuarioDto usuarioDto) {
 
         // 1. Validar que el username no exista
-        if (usuarioAuthRepository.exisexistsByUser(usuarioDto.getUser())) {
+        if (usuarioAuthRepository.existsByUser(usuarioDto.getUser())) {
             throw new IllegalArgumentException(
                     "El user de usuario ya se encuentra registrado");
         }
@@ -71,23 +76,31 @@ public class UsuarioServicesImpl implements UsuarioServices {
                         "Tipo de documento no encontrado"));
 
         // 3. Validar que el documento no esté registrado
-        if (usuarioRepository.existsByTipoDocAndNumDoc(
+        if (usuarioRespository.existsByTipoDocAndNumDoc(
                 tipoDocumento, usuarioDto.getNumDoc())) {
 
             throw new IllegalArgumentException(
                     "El documento ya se encuentra registrado");
         }
 
-        // 4. Convertir DTO a entidad Usuario
+        // 4. Validar que la ciudad exista
+        Ciudad ciudad = ciudadRepository.findById(usuarioDto.getCiudad())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Ciudad no encontrada"));
+
+        // 5. Convertir DTO a entidad Usuario
         Usuario usuario = usuarioMapper.convierteEntidad(usuarioDto);
 
+        // los datos que no se optinene desde el mapper, se asignan manualmente, como el
+        // id, tipo de documento y ciudad.
         usuario.setId(null);
         usuario.setTipoDoc(tipoDocumento);
+        usuario.setCiudad(ciudad);
 
-        // 5. Guardar Usuario
-        Usuario usuarioGuardado = usuarioRepository.save(usuario);
+        // 6. Guardar Usuario
+        Usuario usuarioGuardado = usuarioRespository.save(usuario);
 
-        // 6. Crear las credenciales de autenticación
+        // 7. Crear las credenciales de autenticación
         UsuarioAuth usuarioAuth = UsuarioAuth.builder()
                 .usuario(usuarioGuardado)
                 .user(usuarioDto.getUser())
@@ -104,7 +117,7 @@ public class UsuarioServicesImpl implements UsuarioServices {
                 .habilitado(true)
                 .build();
 
-        // 7. Guardar credenciales
+        // 8. Guardar credenciales
         usuarioAuthRepository.save(usuarioAuth);
 
         // 8. Retornar información del usuario
@@ -119,8 +132,8 @@ public class UsuarioServicesImpl implements UsuarioServices {
     // ejecución del método. Esto puede mejorar el rendimiento y la eficiencia de la
     // consulta.
     @Transactional(readOnly = true)
-    public List<UsuarioDto> listarTodos() {
-        return usuarioRepository.findAll()
+    public List<UsuarioDtoResponse> listarTodos() {
+        return usuarioRespository.findAll()
                 .stream()
                 .map(usuarioMapper::convierteDto)
                 .toList();
@@ -129,27 +142,48 @@ public class UsuarioServicesImpl implements UsuarioServices {
     // consultar Usuario po Id
     @Override
     @Transactional(readOnly = true)
-    public UsuarioDto buscarPorId(Long id) {
-        Usuario usuario = usuarioRepository.findById(id)
+    public UsuarioDtoResponse buscarPorId(Long id) {
+        Usuario usuario = usuarioRespository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Usuario no encontrado" + id));
+        return usuarioMapper.convierteDto(usuario);
+    }
+
+    // consultar Usuario por numero de documento
+    @Override
+    @Transactional(readOnly = true)
+    public UsuarioDtoResponse buscarPorNumDoc(String numDoc) {
+        Usuario usuario = usuarioRespository.findByNumDoc(numDoc);
+        if (usuario == null) {
+            throw new EntityNotFoundException(
+                    "Usuario con numero de documento: " + numDoc + " no encontrado");
+        }
         return usuarioMapper.convierteDto(usuario);
     }
 
     // Actualizar usuario
     @Override
     @Transactional
-    public UsuarioDto actualizar(Long id, UsuarioDto usuarioDto) {
-        Usuario usuarioEncotrado = usuarioRepository.findById(id)
+    public UsuarioDtoResponse actualizar(Long id, UsuarioDto usuarioDto) {
+        Usuario usuarioEncotrado = usuarioRespository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException(
                         "No se encontro Usuario con Id, " + id));
+
+        // validar ciudad, si no existe, lanzar excepción
+        Ciudad ciudad = ciudadRepository.findById(usuarioDto.getCiudad())
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Ciudad no encontrada"));
 
         // Actualizar Datos
         usuarioEncotrado.setNom(usuarioDto.getNomb());
         usuarioEncotrado.setApe(usuarioDto.getApell());
         usuarioEncotrado.setDir(usuarioDto.getDirec());
         usuarioEncotrado.setTel(usuarioDto.getTele());
+        usuarioEncotrado.setCiudad(ciudad);
 
-        Usuario usuarioActualizado = usuarioRepository.save(usuarioEncotrado);
+        // el numero de documento y el tipo de documento no se actualizan, ya que son
+        // datos sensibles y no deberían cambiarse una vez que se han registrado.
+
+        Usuario usuarioActualizado = usuarioRespository.save(usuarioEncotrado);
 
         return usuarioMapper.convierteDto(usuarioActualizado);
     }
@@ -158,13 +192,11 @@ public class UsuarioServicesImpl implements UsuarioServices {
     @Transactional
     public void eliminar(Long id) {
 
-        if (!usuarioRepository.existsById(id)) {
+        if (!usuarioRespository.existsById(id)) {
             throw new EntityNotFoundException(
                     "Usuario con :" + id + " No encontrado");
         }
-        usuarioRepository.deleteById(id);
+        usuarioRespository.deleteById(id);
     }
 
 }
-
-

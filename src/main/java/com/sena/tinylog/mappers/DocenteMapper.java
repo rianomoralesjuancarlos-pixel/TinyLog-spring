@@ -1,5 +1,18 @@
 package com.sena.tinylog.mappers;
 
+<<<<<<< HEAD
+
+import com.sena.tinylog.dtos.DocenteDto;
+import com.sena.tinylog.models.usuarios.Docente;
+
+public interface DocenteMapper  {
+
+    DocenteDto convierteDto(Docente docente);
+
+    Docente convierteEntidad(DocenteDto docenteDto);
+
+}
+=======
 import org.mapstruct.BeanMapping;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
@@ -57,3 +70,4 @@ public interface DocenteMapper extends UsuarioMapper {
         actualizarEntidadDesdeDto(dto, docente);
     }
 }
+>>>>>>> e84aa2f56d5c581ce4fa2ec600d01cbad1cbe5ad

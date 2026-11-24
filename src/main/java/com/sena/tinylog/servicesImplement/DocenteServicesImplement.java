@@ -38,6 +38,10 @@ public class DocenteServicesImplement implements DocenteServices {
 
     @Override
     @Transactional
+<<<<<<< HEAD
+    public DocenteDto guardar(DocenteDto docenteDto) {
+        Docente docente = docenteMapper.convierteEntidad(docenteDto);
+=======
     public DocenteDto guardar(DocenteDto dto) {
         String userNormalizado = dto.getUser().trim().toLowerCase();
 
@@ -59,6 +63,7 @@ public class DocenteServicesImplement implements DocenteServices {
         docente.setNumDoc(dto.getNumDoc());
         docente.setSalario(dto.getSueldo());
 
+>>>>>>> e84aa2f56d5c581ce4fa2ec600d01cbad1cbe5ad
         Docente docenteGuardado = docenteRepository.save(docente);
 
         UsuarioAuth auth = UsuarioAuth.builder()
@@ -92,12 +97,31 @@ public class DocenteServicesImplement implements DocenteServices {
     @Override
     @Transactional(readOnly = true)
     public DocenteDto buscarPorId(Long id) {
+<<<<<<< HEAD
+        Docente docente = docenteRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Docente no encontrado con id: " + id));
+        return docenteMapper.convierteDto(docente);
+=======
         Docente docente = obtenerDocentePorId(id);
         return docenteMapper.toDto(docente);
+>>>>>>> e84aa2f56d5c581ce4fa2ec600d01cbad1cbe5ad
     }
 
     @Override
     @Transactional
+<<<<<<< HEAD
+    public DocenteDto actualizar(Long id, DocenteDto docenteDto) {
+        Docente docenteEncontrado = docenteRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Docente no encontrado con id: " + id));
+
+        docenteEncontrado.setNom(docenteDto.getNomb());
+        docenteEncontrado.setApe(docenteDto.getApell());
+        docenteEncontrado.setTel(docenteDto.getTele());
+        // Agrega aquí dir, numDoc o relaciones si aplica
+
+        Docente docenteActualizado = docenteRepository.save(docenteEncontrado);
+        return docenteMapper.convierteDto(docenteActualizado);
+=======
     public DocenteDto actualizar(Long id, DocenteDto dto) {
         Docente docenteExistente = obtenerDocentePorId(id);
 
@@ -152,10 +176,20 @@ public class DocenteServicesImplement implements DocenteServices {
 
         Docente docenteActualizado = docenteRepository.save(docenteExistente);
         return docenteMapper.toDto(docenteActualizado);
+>>>>>>> e84aa2f56d5c581ce4fa2ec600d01cbad1cbe5ad
     }
 
     @Override
     @Transactional
+<<<<<<< HEAD
+    public DocenteDto eliminar(Long id) {
+        Docente docenteEncontrado = docenteRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Docente no encontrado con id: " + id));
+
+        DocenteDto dtoEliminado = docenteMapper.convierteDto(docenteEncontrado);
+        docenteRepository.delete(docenteEncontrado);
+        return dtoEliminado;
+=======
     public void eliminar(Long id) {
         Docente docenteExistente = obtenerDocentePorId(id);
 
@@ -170,5 +204,6 @@ public class DocenteServicesImplement implements DocenteServices {
     private Docente obtenerDocentePorId(Long id) {
         return docenteRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("No se encontro docente con id: " + id));
+>>>>>>> e84aa2f56d5c581ce4fa2ec600d01cbad1cbe5ad
     }
 }
