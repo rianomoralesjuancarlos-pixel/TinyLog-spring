@@ -3,16 +3,20 @@ package com.sena.tinylog.services;
 import java.util.List;
 
 import com.sena.tinylog.dtos.DirectivoDto;
+import com.sena.tinylog.dtos.DirectivoDtoResponse;
+import com.sena.tinylog.dtos.UsuarioDtoResponse;
 
 public interface DirectivoServices {
 
-    DirectivoDto guardar(DirectivoDto directivoDto);
+    DirectivoDtoResponse guardar(DirectivoDto directivoDto);
 
-    List<DirectivoDto> listarDir();
+    List<DirectivoDtoResponse> listarTodos();
 
-    DirectivoDto buscarPorId(Long id);
+    DirectivoDtoResponse buscarPorId(Long id);
 
-    DirectivoDto actualizar(Long id, DirectivoDto dto);
+    DirectivoDtoResponse buscarPorNumDoc(String numDoc);
+
+    DirectivoDtoResponse actualizar(Long id, DirectivoDto dto);
 
     void eliminar(Long id);
 

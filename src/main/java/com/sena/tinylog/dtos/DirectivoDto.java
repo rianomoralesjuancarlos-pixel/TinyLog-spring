@@ -12,6 +12,8 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder 
 public class DirectivoDto extends UsuarioDto{
 
-    private Byte tipCar;
+private String cargo;
 
 }
+
+

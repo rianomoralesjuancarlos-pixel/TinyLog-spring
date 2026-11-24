@@ -21,7 +21,8 @@ import lombok.experimental.SuperBuilder;
 public class UsuarioDto {
 
     private Long id;
-     // nomb no puede ser nulo ni vacío, debe tener entre 2 y 60 caracteres
+
+    // nomb no puede ser nulo ni vacío, debe tener entre 2 y 60 caracteres
     @NotBlank(message = "El nombre es obligatorio")
     @Size(min = 2, max = 60, message = "El nombre debe tener entre 2 y 60 caracteres")
     private String nomb;
@@ -44,6 +45,13 @@ public class UsuarioDto {
     @NotNull(message = "El número de documento es obligatorio")
     private String numDoc;
 
+    // Código DANE de la ciudad
+    @NotBlank(message = "La ciudad es obligatoria")
+    @Pattern(regexp = "^[0-9]{5}$", message = "La ciudad debe tener un código DANE de 5 dígitos")
+    private String ciudad;
+
+    // No es necesario recibir el departamento ya que se optiene desde la ciudad.
+
     // Credenciales para el registro
     @NotBlank(message = "El nombre de usuario es obligatorio")
     // El user debe ser un correo electrónico válido
@@ -57,7 +65,6 @@ public class UsuarioDto {
     @JsonProperty(access = JsonProperty.Access.WRITE_ONLY)
     @Size(min = 8, max = 20, message = "La contraseña debe tener entre 8 y 20 caracteres")
     private String password;
-
 
 }
 

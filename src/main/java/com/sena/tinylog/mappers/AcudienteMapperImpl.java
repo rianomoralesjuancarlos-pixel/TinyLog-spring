@@ -35,29 +35,24 @@ public class AcudienteMapperImpl implements AcudienteMapper{
                 .build();
     }
 
-    @Override
+        @Override
     public Acudiente toEntidad(AcudienteDto acudienteDto) {
 
-        // valida que tenga datos
         if (acudienteDto == null) {
             return null;
         }
 
-        return Acudiente.builder()
-                // Atrubutos de usuarioDto
-                .id(acudienteDto.getId())
-                .nom(acudienteDto.getNomb())
-                .ape(acudienteDto.getApell())
-                .tel(acudienteDto.getTele())
-                .dir(acudienteDto.getDirec())
+        Acudiente acudiente = new Acudiente();
+        // Atributos de Usuario
+        acudiente.setId(acudienteDto.getId());
+        acudiente.setNom(acudienteDto.getNomb());
+        acudiente.setApe(acudienteDto.getApell());
+        acudiente.setTel(acudienteDto.getTele());
+        acudiente.setDir(acudienteDto.getDirec());
+        acudiente.setNumDoc(acudienteDto.getNumDoc());
 
-                // numero de documento y tipo de document
-                .numDoc(acudienteDto.getNumDoc())
-                // atributos de AcudienteDto// Se establece como null, ya que se asignará posteriormente en el servicio
-
-                // No es necesario mapear tipo de acudiente porque
-                // tiene relacion con la entidad TiposAcudiente
-                .build();
+        return acudiente;
     }
+
 
 }
