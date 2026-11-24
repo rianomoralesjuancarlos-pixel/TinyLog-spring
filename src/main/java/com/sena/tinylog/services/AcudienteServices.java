@@ -2,22 +2,23 @@ package com.sena.tinylog.services;
 
 import java.util.List;
 import com.sena.tinylog.dtos.AcudienteDto;
+import com.sena.tinylog.dtos.AcudienteDtoResponse;
 
 public interface AcudienteServices {
 
     //Registrar nuevo acudiente
-    AcudienteDto guardar(AcudienteDto acudienteDto);
+    AcudienteDtoResponse guardar(AcudienteDto acudienteDto);
 
     //listar todos los acudientes
-    List<AcudienteDto> ListarTodos();
+    List<AcudienteDtoResponse> ListarTodos();
 
     //Consultar acudiente por id
-    AcudienteDto buscarPorId(Long id);
+    AcudienteDtoResponse buscarAcuId(Long id);
 
     //Actualizar acudiente
-    AcudienteDto actualizar(Long id, AcudienteDto acudienteDto);
+    AcudienteDtoResponse actualizar(Long id, AcudienteDto acudienteDto);
 
     //Eliminar acudiente
-    AcudienteDto eliminar(Long id);
+    void eliminar(Long id);
 
 }

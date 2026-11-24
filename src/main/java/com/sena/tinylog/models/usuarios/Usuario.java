@@ -1,5 +1,7 @@
 package com.sena.tinylog.models.usuarios;
 
+import com.sena.tinylog.models.Ciudad;
+
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -25,8 +27,10 @@ import lombok.experimental.SuperBuilder;
 @NoArgsConstructor 
 @SuperBuilder 
 public class Usuario {
-@Id
+
+    @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+
     private Long id;
 
     @ManyToOne(fetch = FetchType.LAZY)
@@ -48,4 +52,13 @@ public class Usuario {
     @Column(name = "telefono", length = 20)
     private String tel;
 
-}
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "ciudad_codigo", nullable = false)
+    private Ciudad ciudad;
+
+@Column(name = "correo", unique = true, length = 80)
+private String user;
+
+@Column(name = "password", length = 255)
+private String password;
+}   

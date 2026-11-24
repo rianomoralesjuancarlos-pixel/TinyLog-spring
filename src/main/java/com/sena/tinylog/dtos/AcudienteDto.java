@@ -13,6 +13,6 @@ import lombok.experimental.SuperBuilder;
 @SuperBuilder
 public class AcudienteDto extends UsuarioDto{
 
-    private Long id;
+    private Byte tipAcu;
 
 }
