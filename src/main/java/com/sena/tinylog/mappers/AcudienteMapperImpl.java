@@ -6,10 +6,10 @@ import com.sena.tinylog.dtos.AcudienteDtoResponse;
 import com.sena.tinylog.models.usuarios.Acudiente;
 
 @Component
-public class AcudienteMapperImpl implements AcudienteMapper {
+public class AcudienteMapperImpl implements AcudienteMapper{
 
     @Override
-    public AcudienteDtoResponse toDto(Acudiente acudiente) {
+    public AcudienteDtoResponse toDto (Acudiente acudiente) {
 
         // valida que tenga datos
         if (acudiente == null) {
@@ -32,7 +32,7 @@ public class AcudienteMapperImpl implements AcudienteMapper {
                 .build();
     }
 
-    @Override
+        @Override
     public Acudiente toEntidad(AcudienteDto acudienteDto) {
 
         if (acudienteDto == null) {
@@ -48,11 +48,21 @@ public class AcudienteMapperImpl implements AcudienteMapper {
         acudiente.setDir(acudienteDto.getDirec());
         acudiente.setNumDoc(acudienteDto.getNumDoc());
 
-        // Se establece como null, ya que se asignará posteriormente en el servicio
-        acudiente.setTipoAcudiente(null);
-        acudiente.setTipoDoc(null);
+<<<<<<< HEAD
+                // numero de documento y tipo de document
+                .numDoc(acudienteDto.getNumDoc())
+                // atributos de AcudienteDto// Se establece como null, ya que se asignará posteriormente en el servicio
+                // atributos de ClienteDto
+                .tipoAcudiente(null) // Se establece como null, ya que se asignará posteriormente en el servicio
+                .tipoDoc(null) // Se establece como null, ya que se asignará posteriormente en el servicio
 
+                // No es necesario mapear tipo de acudiente porque
+                // tiene relacion con la entidad TiposAcudiente
+                .build();
+=======
         return acudiente;
+>>>>>>> b83dab2f54f6c83fb36a3ef8df947231cb9cdc19
     }
+
 
 }
