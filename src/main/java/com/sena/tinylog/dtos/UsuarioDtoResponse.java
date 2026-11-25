@@ -1,8 +1,5 @@
 package com.sena.tinylog.dtos;
 
-import com.sena.tinylog.models.Ciudad;
-import com.sena.tinylog.models.usuarios.TipoDocumento;
-
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -27,12 +24,12 @@ public class UsuarioDtoResponse {
     private String tele;
 
     // Nombre del tipo de documento
-    private TipoDocumento tipoDoc;
+    private String tipoDoc;
 
     private String numDoc;
 
     // Ubicación
-    private Ciudad ciudad;
+    private String ciudad;
 
     private String departamento;
 }
