@@ -8,7 +8,7 @@ public interface DocenteServices {
 
     DocenteDto guardar(DocenteDto docenteDto);
 
-    List<DocenteDto> listarDoc();
+    List<DocenteDto> listarTodos();
 
     DocenteDto buscarPorId(Long id);
 
