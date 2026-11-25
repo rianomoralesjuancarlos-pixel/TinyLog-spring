@@ -34,7 +34,7 @@ public class DocenteController {
 
     @GetMapping
     public ResponseEntity<List<DocenteDto>> listarDoc() {
-        return ResponseEntity.ok(docenteServices.listarDoc());
+        return ResponseEntity.ok(docenteServices.listarTodos());
     }
 
     @GetMapping("/{id}")

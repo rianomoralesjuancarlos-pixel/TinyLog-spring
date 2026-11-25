@@ -38,10 +38,6 @@ public class DocenteServicesImplement implements DocenteServices {
 
     @Override
     @Transactional
-<<<<<<< HEAD
-    public DocenteDto guardar(DocenteDto docenteDto) {
-        Docente docente = docenteMapper.convierteEntidad(docenteDto);
-=======
     public DocenteDto guardar(DocenteDto dto) {
         String userNormalizado = dto.getUser().trim().toLowerCase();
 
@@ -54,16 +50,14 @@ public class DocenteServicesImplement implements DocenteServices {
                 .orElseThrow(() -> new EntityNotFoundException("Tipo de documento no encontrado"));
 
         Rol rolDocente = rolRepository
-                .findByNombreIgnoreCase("DOCENTE")
+                .findByNombre("DOCENTE")
                 .orElseThrow(() -> new EntityNotFoundException("Rol DOCENTE no encontrado"));
 
-        Docente docente = docenteMapper.toEntidad(dto);
+        Docente docente = docenteMapper.convierteEntidad(dto);
         docente.setId(null);
         docente.setTipoDoc(tipoDocumento);
         docente.setNumDoc(dto.getNumDoc());
-        docente.setSalario(dto.getSueldo());
 
->>>>>>> e84aa2f56d5c581ce4fa2ec600d01cbad1cbe5ad
         Docente docenteGuardado = docenteRepository.save(docente);
 
         UsuarioAuth auth = UsuarioAuth.builder()
@@ -82,34 +76,28 @@ public class DocenteServicesImplement implements DocenteServices {
                 .build();
         usuarioAuthRolRepository.save(asignacion);
 
-        return docenteMapper.toDto(docenteGuardado);
+        return docenteMapper.convierteDto(docenteGuardado);
     }
 
     @Override
     @Transactional(readOnly = true)
-    public List<DocenteDto> listarDoc() {
+    public List<DocenteDto> listarTodos() {
         return docenteRepository.findAll()
                 .stream()
-                .map(docenteMapper::toDto)
+                .map(docenteMapper::convierteDto)
                 .toList();
     }
 
     @Override
     @Transactional(readOnly = true)
     public DocenteDto buscarPorId(Long id) {
-<<<<<<< HEAD
         Docente docente = docenteRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Docente no encontrado con id: " + id));
         return docenteMapper.convierteDto(docente);
-=======
-        Docente docente = obtenerDocentePorId(id);
-        return docenteMapper.toDto(docente);
->>>>>>> e84aa2f56d5c581ce4fa2ec600d01cbad1cbe5ad
     }
 
     @Override
     @Transactional
-<<<<<<< HEAD
     public DocenteDto actualizar(Long id, DocenteDto docenteDto) {
         Docente docenteEncontrado = docenteRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Docente no encontrado con id: " + id));
@@ -121,89 +109,17 @@ public class DocenteServicesImplement implements DocenteServices {
 
         Docente docenteActualizado = docenteRepository.save(docenteEncontrado);
         return docenteMapper.convierteDto(docenteActualizado);
-=======
-    public DocenteDto actualizar(Long id, DocenteDto dto) {
-        Docente docenteExistente = obtenerDocentePorId(id);
-
-        if (dto.getNomb() != null) {
-            docenteExistente.setNom(dto.getNomb());
-        }
-        if (dto.getApell() != null) {
-            docenteExistente.setApe(dto.getApell());
-        }
-        if (dto.getDirec() != null) {
-            docenteExistente.setDir(dto.getDirec());
-        }
-        if (dto.getTele() != null) {
-            docenteExistente.setTel(dto.getTele());
-        }
-        if (dto.getNumDoc() != null) {
-            docenteExistente.setNumDoc(dto.getNumDoc());
-        }
-        if (dto.getSueldo() != null) {
-            docenteExistente.setSalario(dto.getSueldo());
-        }
-        if (dto.getTipoDoc() != null) {
-            TipoDocumento tipoDocumento = tipoDocumentoRepository
-                    .findById(dto.getTipoDoc())
-                    .orElseThrow(() -> new EntityNotFoundException("Tipo de documento no encontrado"));
-            docenteExistente.setTipoDoc(tipoDocumento);
-        }
-
-        UsuarioAuth auth = usuarioAuthRepository.findByUsuario_Id(docenteExistente.getId()).orElse(null);
-
-        if (dto.getUser() != null && !dto.getUser().isBlank()) {
-            String nuevoUser = dto.getUser().trim().toLowerCase();
-            usuarioAuthRepository.findByUser(nuevoUser).ifPresent(existente -> {
-                if (!existente.getUsuario().getId().equals(docenteExistente.getId())) {
-                    throw new IllegalArgumentException("El nombre del usuario ya esta registrado");
-                }
-            });
-            if (auth != null) {
-                auth.setUser(nuevoUser);
-            }
-        }
-
-        if (dto.getPassword() != null && !dto.getPassword().isBlank()) {
-            if (auth != null) {
-                auth.setPass(passwordEncoder.encode(dto.getPassword()));
-            }
-        }
-
-        if (auth != null) {
-            usuarioAuthRepository.save(auth);
-        }
-
-        Docente docenteActualizado = docenteRepository.save(docenteExistente);
-        return docenteMapper.toDto(docenteActualizado);
->>>>>>> e84aa2f56d5c581ce4fa2ec600d01cbad1cbe5ad
     }
 
     @Override
     @Transactional
-<<<<<<< HEAD
-    public DocenteDto eliminar(Long id) {
-        Docente docenteEncontrado = docenteRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("Docente no encontrado con id: " + id));
-
-        DocenteDto dtoEliminado = docenteMapper.convierteDto(docenteEncontrado);
-        docenteRepository.delete(docenteEncontrado);
-        return dtoEliminado;
-=======
     public void eliminar(Long id) {
-        Docente docenteExistente = obtenerDocentePorId(id);
 
-        usuarioAuthRepository.findByUsuario_Id(docenteExistente.getId()).ifPresent(auth -> {
-            usuarioAuthRolRepository.deleteAllByUsuarioAuth_Id(auth.getId());
-            usuarioAuthRepository.delete(auth);
-        });
-
-        docenteRepository.delete(docenteExistente);
+        if (!docenteRepository.existsById(id)) {
+            throw new EntityNotFoundException(
+                    "Usuario con :" + id + " No encontrado");
+        }
+       docenteRepository.deleteById(id);
     }
 
-    private Docente obtenerDocentePorId(Long id) {
-        return docenteRepository.findById(id)
-                .orElseThrow(() -> new EntityNotFoundException("No se encontro docente con id: " + id));
->>>>>>> e84aa2f56d5c581ce4fa2ec600d01cbad1cbe5ad
-    }
 }
