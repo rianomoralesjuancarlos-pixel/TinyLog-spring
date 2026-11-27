@@ -9,7 +9,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 
 @Entity
-@Table(name = "departamentos")
+@Table(name = "barrio")
 @Getter
 // El accessLevel.PROTECTED en el constructor sin argumentos evita que se pueda
 // instanciar directamente la clase desde fuera del paquete, promoviendo el uso
@@ -18,7 +18,7 @@ import lombok.NoArgsConstructor;
 // una instancia de la clase directamente desde fuera del paquete, lo que ayuda
 // a mantener la integridad de los datos y a evitar modificaciones no deseadas.
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
-public class Departamento {
+public class Barrio {
 
     @Id
     @Column(name = "codigo", length = 2)

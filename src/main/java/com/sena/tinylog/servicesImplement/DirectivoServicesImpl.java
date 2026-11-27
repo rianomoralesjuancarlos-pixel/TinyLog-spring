@@ -1,5 +1,6 @@
 package com.sena.tinylog.servicesImplement;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -9,14 +10,20 @@ import org.springframework.transaction.annotation.Transactional;
 import com.sena.tinylog.dtos.DirectivoDto;
 import com.sena.tinylog.dtos.DirectivoDtoResponse;
 import com.sena.tinylog.mappers.DirectivoMapper;
+import com.sena.tinylog.models.Barrio;
 import com.sena.tinylog.models.Ciudad;
+import com.sena.tinylog.models.auth.Rol;
 import com.sena.tinylog.models.auth.UsuarioAuth;
+import com.sena.tinylog.models.auth.UsuarioAuthRol;
 import com.sena.tinylog.models.usuarios.Directivo;
 import com.sena.tinylog.models.usuarios.TipoDocumento;
+import com.sena.tinylog.repositoryes.BarrioRepository;
 import com.sena.tinylog.repositoryes.CiudadRepository;
 import com.sena.tinylog.repositoryes.DirectivoRepository;
+import com.sena.tinylog.repositoryes.RolRepository;
 import com.sena.tinylog.repositoryes.TipoDocumentoRepository;
 import com.sena.tinylog.repositoryes.UsuarioAuthRepository;
+import com.sena.tinylog.repositoryes.UsuarioAuthRolRepository;
 import com.sena.tinylog.services.DirectivoServices;
 
 import jakarta.persistence.EntityNotFoundException;
@@ -27,10 +34,13 @@ import lombok.RequiredArgsConstructor;
 public class DirectivoServicesImpl implements DirectivoServices {
 
     private final DirectivoRepository directivoRepository;
+    private final UsuarioAuthRolRepository usuarioAuthRolRepository;
+    private final RolRepository rolRepository;
     private final UsuarioAuthRepository usuarioAuthRepository;
     private final TipoDocumentoRepository tipoDocumentoRepository;
     private final DirectivoMapper directivoMapper;
     private final CiudadRepository ciudadRepository;
+    private final BarrioRepository barrioRepository;
     private final PasswordEncoder passwordEncoder;
 
     @Override
@@ -52,10 +62,14 @@ public class DirectivoServicesImpl implements DirectivoServices {
         Ciudad ciudad = ciudadRepository.findById(directivoDto.getCiudad())
                 .orElseThrow(() -> new EntityNotFoundException("Ciudad no encontrada"));
 
+        Barrio barrio = barrioRepository.findById(directivoDto.getBarrio())
+                .orElseThrow(() -> new EntityNotFoundException("Barrio no encontrado"));
+
         Directivo directivo = directivoMapper.toEntidad(directivoDto);
         directivo.setId(null);
         directivo.setTipoDoc(tipoDocumento);
         directivo.setCiudad(ciudad);
+        directivo.setBarrio(barrio);
         if (directivoDto.getCargo() != null && !directivoDto.getCargo().isBlank()) {
             directivo.setCargo(directivoDto.getCargo());
         }
@@ -70,6 +84,20 @@ public class DirectivoServicesImpl implements DirectivoServices {
                 .build();
 
         usuarioAuthRepository.save(usuarioAuth);
+
+        Rol rolDirectivo = rolRepository.findByNombre("ROLE_DIRECTIVO")
+                .orElseThrow(() -> new EntityNotFoundException(
+                        "Rol de directivo no encontrado"));
+
+        UsuarioAuthRol asignacion = UsuarioAuthRol.builder()
+                .usuarioAuth(usuarioAuth)
+                .rol(rolDirectivo)
+                .activo(true)
+                .fechaAsignacion(LocalDateTime.now())
+                .observacion("Rol asignado automáticamente al registrar el directivo")
+                .build();
+
+        usuarioAuthRolRepository.save(asignacion);
 
         return directivoMapper.toDto(directivoGuardado);
     }
@@ -113,11 +141,15 @@ public class DirectivoServicesImpl implements DirectivoServices {
         Ciudad ciudad = ciudadRepository.findById(directivoDto.getCiudad())
                 .orElseThrow(() -> new EntityNotFoundException("Ciudad no encontrada"));
 
+        Barrio barrio = barrioRepository.findById(directivoDto.getBarrio())
+                .orElseThrow(() -> new EntityNotFoundException("Barrio no encontrado"));
+
         directivoEncontrado.setNom(directivoDto.getNomb());
         directivoEncontrado.setApe(directivoDto.getApell());
         directivoEncontrado.setDir(directivoDto.getDirec());
         directivoEncontrado.setTel(directivoDto.getTele());
         directivoEncontrado.setCiudad(ciudad);
+        directivoEncontrado.setBarrio(barrio);
         if (directivoDto.getCargo() != null && !directivoDto.getCargo().isBlank()) {
             directivoEncontrado.setCargo(directivoDto.getCargo());
         }

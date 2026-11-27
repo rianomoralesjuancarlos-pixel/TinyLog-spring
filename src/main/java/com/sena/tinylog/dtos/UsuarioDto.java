@@ -44,7 +44,10 @@ public class UsuarioDto {
     // numDoc no puede ser nulo y debe ser positivo
     @NotNull(message = "El número de documento es obligatorio")
     private String numDoc;
-
+    
+    @NotBlank (message = "el barrio es obligatorio")
+    @Pattern(regexp = "^[0-9]{2}$", message = "el barrio debe tener un código DANE de 5 dígitos")
+    private String barrio;
     // Código DANE de la ciudad
     @NotBlank(message = "La ciudad es obligatoria")
     @Pattern(regexp = "^[0-9]{5}$", message = "La ciudad debe tener un código DANE de 5 dígitos")

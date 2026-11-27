@@ -27,7 +27,7 @@ public class AcudientesController {
     private final AcudienteServices acuser;
 
     //Crear
-    @PostMapping("/crear")
+    @PostMapping
     public ResponseEntity<AcudienteDtoResponse> saveAcu(@Valid @RequestBody AcudienteDto dto) {
         
         AcudienteDtoResponse acusave = acuser.guardar(dto);
