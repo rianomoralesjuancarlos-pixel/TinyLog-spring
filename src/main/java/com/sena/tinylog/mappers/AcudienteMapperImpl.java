@@ -6,19 +6,16 @@ import com.sena.tinylog.dtos.AcudienteDtoResponse;
 import com.sena.tinylog.models.usuarios.Acudiente;
 
 @Component
-public class AcudienteMapperImpl implements AcudienteMapper{
+public class AcudienteMapperImpl implements AcudienteMapper {
 
     @Override
-    public AcudienteDtoResponse toDto (Acudiente acudiente) {
-
-        // valida que tenga datos
+    public AcudienteDtoResponse toDto(Acudiente acudiente) {
         if (acudiente == null) {
             return null;
         }
 
-        // concertir de Acudiente a AcudienteDto
         return AcudienteDtoResponse.builder()
-                // atributos de UsuarioDto
+                // Atributos de UsuarioDto
                 .id(acudiente.getId())
                 .nomb(acudiente.getNom())
                 .apell(acudiente.getApe())
@@ -27,19 +24,19 @@ public class AcudienteMapperImpl implements AcudienteMapper{
                 .tipoDoc(acudiente.getTipoDoc().getId())
                 .numDoc(acudiente.getNumDoc())
 
-                // atributos de AcudienteDto
+                // Atributos de AcudienteDto
                 .tipAcu(acudiente.getTipoAcudiente().getNom_TipoAcu())
                 .build();
     }
 
-        @Override
+    @Override
     public Acudiente toEntidad(AcudienteDto acudienteDto) {
-
         if (acudienteDto == null) {
             return null;
         }
 
         Acudiente acudiente = new Acudiente();
+
         // Atributos de Usuario
         acudiente.setId(acudienteDto.getId());
         acudiente.setNom(acudienteDto.getNomb());
@@ -48,21 +45,10 @@ public class AcudienteMapperImpl implements AcudienteMapper{
         acudiente.setDir(acudienteDto.getDirec());
         acudiente.setNumDoc(acudienteDto.getNumDoc());
 
-<<<<<<< HEAD
-                // numero de documento y tipo de document
-                .numDoc(acudienteDto.getNumDoc())
-                // atributos de AcudienteDto// Se establece como null, ya que se asignará posteriormente en el servicio
-                // atributos de ClienteDto
-                .tipoAcudiente(null) // Se establece como null, ya que se asignará posteriormente en el servicio
-                .tipoDoc(null) // Se establece como null, ya que se asignará posteriormente en el servicio
+        // Relaciones asignadas posteriormente en el servicio
+        acudiente.setTipoAcudiente(null);
+        acudiente.setTipoDoc(null);
 
-                // No es necesario mapear tipo de acudiente porque
-                // tiene relacion con la entidad TiposAcudiente
-                .build();
-=======
         return acudiente;
->>>>>>> b83dab2f54f6c83fb36a3ef8df947231cb9cdc19
     }
-
-
 }
