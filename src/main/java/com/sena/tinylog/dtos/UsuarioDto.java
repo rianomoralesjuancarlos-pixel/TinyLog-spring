@@ -46,7 +46,7 @@ public class UsuarioDto {
     private String numDoc;
     
     @NotBlank (message = "el barrio es obligatorio")
-    @Pattern(regexp = "^[0-9]{2}$", message = "el barrio debe tener un código DANE de 5 dígitos")
+    @Pattern(regexp = "^[0-9]{5}$", message = "el barrio debe tener un código DANE de 5 dígitos")
     private String barrio;
     // Código DANE de la ciudad
     @NotBlank(message = "La ciudad es obligatoria")
