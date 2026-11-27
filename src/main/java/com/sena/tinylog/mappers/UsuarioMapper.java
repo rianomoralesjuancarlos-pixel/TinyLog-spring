@@ -17,13 +17,8 @@ public interface UsuarioMapper{
     @Mapping(source = "tel", target = "tele")
     @Mapping(source = "tipoDoc.nombre", target = "tipoDoc")
     @Mapping(source = "numDoc", target = "numDoc")
-<<<<<<< HEAD
     @Mapping(source = "barrio", target ="barrio")
     @Mapping(source = "ciudad", target = "ciudad")
-=======
-    @Mapping(source = "ciudad.nombre", target = "ciudad")
-    @Mapping(source = "ciudad.departamento.nombre", target = "departamento")
->>>>>>> b4ccfe9d7b16505d6cb6fd5f7b31a05fe323b185
     UsuarioDtoResponse convierteDto(Usuario usuario);
 
     // convertir de DTO a Entidad

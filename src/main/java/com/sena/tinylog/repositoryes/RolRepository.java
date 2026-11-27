@@ -8,6 +8,6 @@ import com.sena.tinylog.models.auth.Rol;
 
 public interface RolRepository extends JpaRepository<Rol, Long> {
 
-    Optional<Rol> findByNombreIgnoreCase(String nombre);
+    Optional<Rol> findByNombre(String nombre);
 
 }
