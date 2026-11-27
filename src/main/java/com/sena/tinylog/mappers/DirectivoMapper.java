@@ -18,7 +18,7 @@ public interface DirectivoMapper {
     @Mapping(source = "cargo", target = "cargo")
     @Mapping(target = "id", ignore = true)
     @Mapping(target = "tipoDoc", ignore = true)
-    @Mapping(target = "barrio", ignore = true)
+    @Mapping (target = "barrio", ignore = true)
     @Mapping(target = "ciudad", ignore = true)
     Directivo toEntidad(DirectivoDto directivoDto);
 
@@ -28,9 +28,9 @@ public interface DirectivoMapper {
     @Mapping(source = "tel", target = "tele")
     @Mapping(source = "numDoc", target = "numDoc")
     @Mapping(source = "cargo", target = "cargo")
-    @Mapping(source = "tipoDoc.id", target = "tipoDoc")
+    @Mapping(source = "tipoDoc.abreviatura", target = "tipoDoc")
     @Mapping(source = "barrio", target = "barrio")
-    @Mapping(source = "ciudad.", target = "ciudad")
+    @Mapping(source = "ciudad", target = "ciudad")
     DirectivoDtoResponse toDto(Directivo directivo);
 
 }

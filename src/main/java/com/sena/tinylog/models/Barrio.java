@@ -21,7 +21,7 @@ import lombok.NoArgsConstructor;
 public class Barrio {
 
     @Id
-    @Column(name = "codigo", length = 2)
+    @Column(name = "codigo", length = 5)
     private String codigo;
 
     @Column(name = "nombre", nullable = false, length = 80)

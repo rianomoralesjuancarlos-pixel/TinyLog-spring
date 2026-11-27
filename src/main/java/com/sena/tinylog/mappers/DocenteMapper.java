@@ -1,12 +1,10 @@
 package com.sena.tinylog.mappers;
 
-
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 
 import com.sena.tinylog.dtos.DocenteDto;
 import com.sena.tinylog.models.usuarios.Docente;
-
 
 @Mapper(componentModel = "spring")
 public interface DocenteMapper {
@@ -19,8 +17,8 @@ public interface DocenteMapper {
     @Mapping(source = "numDoc", target = "numDoc")
     @Mapping(source = "salario", target = "salario")
     @Mapping(source = "tipoDoc.id", target = "tipoDoc")
-    @Mapping(source = "barrio.codigo", target = "barrio")
-    @Mapping(source = "ciudad.codigo", target = "ciudad")
+    @Mapping(source = "barrio.nombre", target = "barrio")
+    @Mapping(source = "ciudad.nombre", target = "ciudad")
     @Mapping(target = "user", ignore = true)
     @Mapping(source = "cargo", target = "cargo")
     @Mapping(target = "password", ignore = true)
@@ -39,4 +37,3 @@ public interface DocenteMapper {
     @Mapping(target = "ciudad", ignore = true)
     Docente toEntidad(DocenteDto docenteDto);
 }
-

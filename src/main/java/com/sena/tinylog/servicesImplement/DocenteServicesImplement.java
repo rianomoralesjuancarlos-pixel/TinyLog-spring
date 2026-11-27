@@ -58,7 +58,7 @@ public class DocenteServicesImplement implements DocenteServices {
                 .orElseThrow(() -> new EntityNotFoundException("Barrio no encontrado"));
 
         Rol rolDocente = rolRepository
-                .findByNombre("DOCENTE") // Cambia por el método real de RolRepository si tiene otro nombre
+                .findByNombre("ROLE_DOCENTE") // Cambia por el método real de RolRepository si tiene otro nombre
                 .orElseThrow(() -> new EntityNotFoundException("Rol DOCENTE no encontrado"));
 
         String userNormalizado = docenteDto.getUser().trim().toLowerCase(); // Ajusta al getter de usuario en DocenteDto
