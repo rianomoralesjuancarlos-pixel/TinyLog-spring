@@ -9,11 +9,15 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.sena.tinylog.dtos.DocenteDto;
 import com.sena.tinylog.mappers.DocenteMapper;
+import com.sena.tinylog.models.Barrio;
+import com.sena.tinylog.models.Ciudad;
 import com.sena.tinylog.models.auth.Rol;
 import com.sena.tinylog.models.auth.UsuarioAuth;
 import com.sena.tinylog.models.auth.UsuarioAuthRol;
 import com.sena.tinylog.models.usuarios.Docente;
 import com.sena.tinylog.models.usuarios.TipoDocumento;
+import com.sena.tinylog.repositoryes.BarrioRepository;
+import com.sena.tinylog.repositoryes.CiudadRepository;
 import com.sena.tinylog.repositoryes.DocenteRepository;
 import com.sena.tinylog.repositoryes.RolRepository;
 import com.sena.tinylog.repositoryes.TipoDocumentoRepository;
@@ -31,6 +35,8 @@ public class DocenteServicesImplement implements DocenteServices {
     private final DocenteRepository docenteRepository;
     private final DocenteMapper docenteMapper;
     private final TipoDocumentoRepository tipoDocumentoRepository;
+    private final CiudadRepository ciudadRepository;
+    private final BarrioRepository barrioRepository;
     private final RolRepository rolRepository;
     private final UsuarioAuthRepository usuarioAuthRepository;
     private final UsuarioAuthRolRepository usuarioAuthRolRepository;
@@ -49,14 +55,24 @@ public class DocenteServicesImplement implements DocenteServices {
                 .findById(dto.getTipoDoc())
                 .orElseThrow(() -> new EntityNotFoundException("Tipo de documento no encontrado"));
 
+        Ciudad ciudad = ciudadRepository
+                .findById(dto.getCiudad())
+                .orElseThrow(() -> new EntityNotFoundException("Ciudad no encontrada"));
+
+        Barrio barrio = barrioRepository
+                .findById(dto.getBarrio())
+                .orElseThrow(() -> new EntityNotFoundException("Barrio no encontrado"));
+
         Rol rolDocente = rolRepository
-                .findByNombre("DOCENTE")
+                .findByNombre("ROLE_DOCENTE")
                 .orElseThrow(() -> new EntityNotFoundException("Rol DOCENTE no encontrado"));
 
         Docente docente = docenteMapper.convierteEntidad(dto);
         docente.setId(null);
         docente.setTipoDoc(tipoDocumento);
         docente.setNumDoc(dto.getNumDoc());
+        docente.setCiudad(ciudad);
+        docente.setBarrio(barrio);
 
         Docente docenteGuardado = docenteRepository.save(docente);
 
@@ -102,10 +118,21 @@ public class DocenteServicesImplement implements DocenteServices {
         Docente docenteEncontrado = docenteRepository.findById(id)
                 .orElseThrow(() -> new EntityNotFoundException("Docente no encontrado con id: " + id));
 
+        Ciudad ciudad = ciudadRepository
+                .findById(docenteDto.getCiudad())
+                .orElseThrow(() -> new EntityNotFoundException("Ciudad no encontrada"));
+
+        Barrio barrio = barrioRepository
+                .findById(docenteDto.getBarrio())
+                .orElseThrow(() -> new EntityNotFoundException("Barrio no encontrado"));
+
         docenteEncontrado.setNom(docenteDto.getNomb());
         docenteEncontrado.setApe(docenteDto.getApell());
+        docenteEncontrado.setDir(docenteDto.getDirec());
         docenteEncontrado.setTel(docenteDto.getTele());
-        // Agrega aquí dir, numDoc o relaciones si aplica
+        docenteEncontrado.setNumDoc(docenteDto.getNumDoc());
+        docenteEncontrado.setCiudad(ciudad);
+        docenteEncontrado.setBarrio(barrio);
 
         Docente docenteActualizado = docenteRepository.save(docenteEncontrado);
         return docenteMapper.convierteDto(docenteActualizado);
@@ -114,12 +141,10 @@ public class DocenteServicesImplement implements DocenteServices {
     @Override
     @Transactional
     public void eliminar(Long id) {
-
         if (!docenteRepository.existsById(id)) {
             throw new EntityNotFoundException(
                     "Usuario con :" + id + " No encontrado");
         }
-       docenteRepository.deleteById(id);
+        docenteRepository.deleteById(id);
     }
-
 }

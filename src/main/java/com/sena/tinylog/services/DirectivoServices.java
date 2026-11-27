@@ -4,7 +4,7 @@ import java.util.List;
 
 import com.sena.tinylog.dtos.DirectivoDto;
 import com.sena.tinylog.dtos.DirectivoDtoResponse;
-import com.sena.tinylog.dtos.UsuarioDtoResponse;
+
 
 public interface DirectivoServices {
 

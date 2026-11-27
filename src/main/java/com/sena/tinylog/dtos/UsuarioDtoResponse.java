@@ -1,5 +1,6 @@
 package com.sena.tinylog.dtos;
 
+import com.sena.tinylog.models.Barrio;
 import com.sena.tinylog.models.Ciudad;
 import com.sena.tinylog.models.usuarios.TipoDocumento;
 
@@ -34,5 +35,5 @@ public class UsuarioDtoResponse {
     // Ubicación
     private Ciudad ciudad;
 
-    private String departamento;
+    private Barrio barrio;
 }

@@ -15,6 +15,5 @@ public class AcudienteDtoResponse extends UsuarioDto {
 
     private String tipAcu;
 
-    private String nomTipoDoc;
 
 }

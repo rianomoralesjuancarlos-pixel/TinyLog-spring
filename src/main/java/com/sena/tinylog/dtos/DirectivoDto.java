@@ -14,6 +14,8 @@ public class DirectivoDto extends UsuarioDto{
 
 private String cargo;
 
+ private String correoInstitucional;
+
 }
 
 

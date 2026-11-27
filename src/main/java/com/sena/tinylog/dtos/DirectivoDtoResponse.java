@@ -6,12 +6,14 @@ import lombok.NoArgsConstructor;
 import lombok.Setter;
 import lombok.experimental.SuperBuilder;
 
-
-@Getter @Setter
+@Getter @Setter 
 @AllArgsConstructor 
 @NoArgsConstructor 
 @SuperBuilder 
 public class DirectivoDtoResponse extends UsuarioDtoResponse{
+
     private String cargo;
+
+    private String correoInstitucional;
 
 }

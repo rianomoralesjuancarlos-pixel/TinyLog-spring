@@ -8,11 +8,7 @@ import com.sena.tinylog.models.usuarios.Docente;
 
 public interface DocenteRepository extends JpaRepository<Docente, Long> {
 
+    Optional<Docente> findByNumDoc(String numDoc);
 
-
-
-    Optional<Docente> findByUser(String user);
-
-    boolean existsByUser(String user);
-
+    Docente findByTipoDoc_IdAndNumDoc(Byte tipoDocId, String numDoc);
 }
